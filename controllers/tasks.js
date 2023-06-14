@@ -26,13 +26,16 @@ const createTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
   try {
-    await Task.findByIdAndDelete(req.params.id);
-    req.session.successMessage = "Task deleted successfully.";
-    res.redirect("/tasks");
+    const deletedTask = await Task.findByIdAndDelete(req.params.id);
+    if (deletedTask) {
+      req.session.pendingMessage = "The task was deleted successfully.";
+    } else {
+      req.session.errorMessage = "Task not found.";
+    }
   } catch (err) {
-    req.session.errorMessage = "Failed to delete the task.";
-    res.redirect("/tasks");
+    req.session.pendingMessage= "Failed to delete the task.";
   }
+  res.redirect("/tasks");
 };
 
 const editTask = async (req, res) => {
