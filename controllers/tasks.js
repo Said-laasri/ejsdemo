@@ -25,7 +25,14 @@ const createTask = async (req, res) => {
 };
 
 const deleteTask = async (req, res) => {
-  res.send("in deleteTask");
+  try {
+    await Task.findByIdAndDelete(req.params.id);
+    req.session.successMessage = "Task deleted successfully.";
+    res.redirect("/tasks");
+  } catch (err) {
+    req.session.errorMessage = "Failed to delete the task.";
+    res.redirect("/tasks");
+  }
 };
 
 const editTask = async (req, res) => {
