@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+  <%- include('../partials/header'); %>
+</header>
+
+<main>
+  <p><%= message %></p>
+  <div class="jumbotron">
+    <% if (tasks.length > 0) { %>
+      <table class="table"
+        <tr><th>Name</th><th>Completed</th><th colspan="2"></th></tr>
+        <% tasks.forEach(function(task){ %>
+          <tr><td><%= task.name %></td><td><%= task.completed %></td>
+            <td><a href=<%= "/tasks/edit/" + task.id %>  class="btn btn-primary">Edit</a></td>
+            <td><a href=<%= "/tasks/delete/" + task.id %>  class="btn btn-primary">Delete</a></td>
+          </tr>
+        <% }) %>
+      </table>
+    <% } else { %>
+      <h2>There are no tasks to display.</h2>
+    <% } %>
+    <a href="/tasks/add" class="btn btn-primary">Add a Task</a>
+  </div>
+</main>
+
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>
